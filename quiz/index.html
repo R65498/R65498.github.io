@@ -3,28 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>誕生日プレゼントゲットチャレンジ</title>
+    <title>クイズ</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
         <p id="js-question" class="question-text"></p>
         <div id="js-items" class="btn-grid">
     </div>
+    <p>なお、写真を見返しても大丈夫です</p>
 
     <script>
-        // クイズの内容をここに記述（後で自由に書き換えてください）
         const quiz = [
             {
-                question: '僕たちが初めての旅行で行った場所は？',
-                answers: [ '箱根', '沖縄', '京都', '北海道'],
-                correct: '沖縄'
+                question: '今からクイズが始まります！練習問題です あなたの好きな色は？',
+                answers: [ '青', '赤', '緑', '黄色'],
+                correct: '青'
+            },
+            {
+                question: '僕たちが初めて二人で旅行で行った場所は？',
+                answers: [ '京都', 'USJ', '大阪', '兵庫'],
+                correct: '大阪'
             }, {
                 question: '付き合い始めた記念日はいつ？',
-                answers: [ '8月27日', '9月15日', '10月1日', '10月10日'],
-                correct: '10月10日'
+                answers: [ '10月5日', '10月6日', '10月7日', '10月8日'],
+                correct: '10月6日'
             }, {
                 question: '僕の好きな食べ物は次のうちどれ？',
                 answers: [ '寿司', '焼肉', 'ラーメン', 'カレーライス'],
@@ -95,6 +99,8 @@
 
         // 最初のクイズを表示
         setupQuiz();
+
+        
     </script>
 </body>
 </html>
