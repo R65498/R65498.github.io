@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>誕生日プレゼントゲットチャレンジ</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <p id="js-question" class="question-text"></p>
+        <div id="js-items" class="btn-grid">
+    </div>
+
+    <script>
+        // クイズの内容をここに記述（後で自由に書き換えてください）
+        const quiz = [
+            {
+                question: '僕たちが初めての旅行で行った場所は？',
+                answers: [ '箱根', '沖縄', '京都', '北海道'],
+                correct: '沖縄'
+            }, {
+                question: '付き合い始めた記念日はいつ？',
+                answers: [ '8月27日', '9月15日', '10月1日', '10月10日'],
+                correct: '10月10日'
+            }, {
+                question: '僕の好きな食べ物は次のうちどれ？',
+                answers: [ '寿司', '焼肉', 'ラーメン', 'カレーライス'],
+                correct: 'カレーライス'
+            }, {
+                question: '初めて一緒に観た映画のジャンルは？',
+                answers: [ 'アクション', 'コメディ', 'ホラー', '恋愛'],
+                correct: 'アクション'
+            }
+        ];
+
+        const questionElement = document.getElementById('js-question');
+        const itemsElement = document.getElementById('js-items');
+
+        let quizIndex = 0;
+        let score = 0;
+
+        // クイズの問題と選択肢を表示する関数
+        const setupQuiz = () => {
+            questionElement.textContent = quiz[quizIndex].question;
+            
+            // 選択肢を一度クリア
+            while(itemsElement.firstChild) {
+                itemsElement.removeChild(itemsElement.firstChild);
+            }
+            
+            // 選択肢を生成
+            quiz[quizIndex].answers.forEach((answer) => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.classList.add('btn');
+                itemsElement.appendChild(button);
+
+                // ボタンがクリックされたときの処理
+                button.addEventListener('click', (e) => {
+                    judge(e.target);
+                });
+            });
+        };
+
+        // 正誤判定をする関数
+        const judge = (selectedButton) => {
+            const selectedAnswer = selectedButton.textContent;
+            if(selectedAnswer === quiz[quizIndex].correct){
+                alert('正解！');
+                score++;
+            } else {
+                alert('不正解！');
+            }
+            quizIndex++;
+            goToNext();
+        };
+
+        // 次の問題へ進むか、結果を表示する関数
+        const goToNext = () => {
+            if(quizIndex < quiz.length) {
+                setupQuiz();
+            } else {
+                showResult();
+            }
+        };
+        
+        // 最終結果を表示する関数
+        const showResult = () => {
+            questionElement.textContent = `クイズ終了！あなたの正解数は ${score}/${quiz.length} です!`;
+            itemsElement.innerHTML = `<p class="result-message">おめでとう! プレゼントは「いつも使う机の2段目の引き出し」の中だよ! </p>`;
+        };
+
+        // 最初のクイズを表示
+        setupQuiz();
+    </script>
+</body>
+</html>
