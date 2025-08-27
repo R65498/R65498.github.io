@@ -26,7 +26,7 @@ body {
 .question-text {
     font-size: 1.5em; /* 文字を少し大きく */
     font-weight: bold;
-    
+    line-height: 1.6;
     margin-bottom: 25px;
     text-align: center;
 }
