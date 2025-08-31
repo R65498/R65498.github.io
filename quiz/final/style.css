@@ -1,0 +1,100 @@
+/* 最終問題ページの背景と基本設定 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #07A0C3; /* 暗めの青色背景 */
+    color: #fff; /* 全体の文字色を白に */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* 背景のノイズがはみ出さないように */
+    position: relative;
+}
+
+
+/* 最終問題コンテナ */
+.final-container {
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒でコンテンツを浮き上がらせる */
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    text-align: center;
+    border: 2px solid #ffcc00; /* 金色の枠線 */
+    animation: fadeInScale 1s ease-out forwards; /* フェードインと拡大 */
+}
+
+/* アニメーションキーフレーム */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+h1 {
+    font-size: 2.8em;
+    color: #ffcc00; /* 金色の文字 */
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(255, 204, 0, 0.7); /* 文字の輝き */
+}
+
+.final-question {
+    font-size: 1.6em;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: #eee;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 2px solid #ffcc00; /* 金色の枠線 */
+    border-radius: 8px;
+    font-size: 1.2em;
+    background-color: rgba(255, 255, 255, 0.1); /* 少し透明な背景 */
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* 入力欄のプレースホルダーの色 */
+input[type="text"]::placeholder {
+    color: #ccc;
+    opacity: 0.8;
+}
+
+button {
+    width: 90%;
+    padding: 18px;
+    font-size: 1.4em;
+    font-weight: bold;
+    background-color: #ffcc00; /* 金色のボタン */
+    color: #a30000; /* ボタンの文字色を背景色と合わせる */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: scale(0.98); /* 押した時に少し縮む */
+}
+
+.final-result-message {
+    margin-top: 30px;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #ffcc00; /* 結果メッセージも金色 */
+}

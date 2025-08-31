@@ -3,77 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クイズ</title>
+    <title>君への挑戦状</title>
     <meta name="robots" content="noindex">
-    <link rel="stylesheet" href="style.css?v=1.0">
+    <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 <body>
+
     <div class="container">
+        <h2 id="js-level-display"></h2>
         <p id="js-question" class="question-text"></p>
         <div id="js-items" class="btn-grid">
+            </div>
     </div>
 
     <script>
-        const quiz = [
-            {
-                question: '今からクイズが始まります！練習問題です あなたの好きな色は？',
-                answers: [ '青', '赤', '緑', '黄色'],
-                correct: '青'
-            },
-            {
-                question: '僕たちが初めて二人で旅行で行った場所は？',
-                answers: [ '京都', 'USJ', '大阪', '兵庫'],
-                correct: '大阪'
-            }, {
-                question: '付き合い始めた記念日はいつ？',
-                answers: [ '10月5日', '10月6日', '10月7日', '10月8日'],
-                correct: '10月6日'
-            }, {
-                question: '僕の好きな食べ物は次のうちどれ？',
-                answers: [ '寿司', '焼肉', 'ラーメン', 'カレーライス'],
-                correct: 'カレーライス'
-            }, {
-                question: '初めて一緒に観た映画のジャンルは？',
-                answers: [ 'アクション', 'コメディ', 'ホラー', '恋愛'],
-                correct: 'アクション'
-            }
-        ];
+        // --- 設定項目 ---
+        // 2周目以降で、このレベルに到達すると最終問題へ進みます
+        const finalLevelThreshold = 10; 
+        // 最終問題正解後に表示されるURL
+        const finalQuizUrl = './final/index.html';
 
+        // --- クイズデータ ---
+        const allQuizzes = {
+            // 1周目のクイズ(写真無し)
+            round1: [
+                { question: '今からクイズが始まります！練習問題です あなたの好きな色は？', answers: [ '青', '赤', '緑', '黄色'], correct: '青' },
+                { question: '僕たちが初めての旅行で行った場所は？', answers: ['箱根', '沖縄', '京都', '北海道'], correct: '沖縄' },
+                { question: '付き合い始めた記念日はいつ？', answers: ['10月5日', '10月6日', '10月7日', '10月8日'], correct: '10月6日' },
+                { question: '僕の好きな食べ物は次のうちどれ？', answers: ['寿司', '焼肉', 'ラーメン', 'カレーライス'], correct: 'カレーライス' },
+                { question: '初めて一緒に観た映画のジャンルは？', answers: ['アクション', 'コメディ', 'ホラー', '恋愛'], correct: 'アクション' }
+            ],
+            // 2周目のクイズ(写真アリ)
+            round2: [
+                { question: '僕たちが初めての旅行で行った場所は？', answers: ['箱根', '沖縄', '京都', '北海道'], correct: '沖縄' },
+                { question: '付き合い始めた記念日はいつ？', answers: ['10月5日', '10月6日', '10月7日', '10月8日'], correct: '10月6日' },
+                { question: '僕の好きな食べ物は次のうちどれ？', answers: ['寿司', '焼肉', 'ラーメン', 'カレーライス'], correct: 'カレーライス' },
+                { question: '初めて一緒に観た映画のジャンルは？', answers: ['アクション', 'コメディ', 'ホラー', '恋愛'], correct: 'アクション' }
+            ],
+            // 3周目以降は同じクイズが出題されます(救済措置)
+            round3: [
+                { question: '初めてプレゼントしてくれた物の色は？', answers: ['青', '赤', '白', '黒'], correct: '白' },
+                { question: 'よく行くカフェでいつも頼むものは？', answers: ['コーヒー', '紅茶', 'カフェラテ', 'ジュース'], correct: 'カフェラテ' },
+                { question: '僕のスマホの待ち受け画像はいつの写真？', answers: ['記念日の写真', '旅行の写真', '何気ない日常の写真', '初期設定のまま'], correct: '旅行の写真' },
+                { question: 'ボーリングの最高スコアは？', answers: ['100', '120', '150', '180'], correct: '150' }
+            ],
+        };
+
+        // --- DOM要素の取得 ---
+        const levelElement = document.getElementById('js-level-display');
         const questionElement = document.getElementById('js-question');
         const itemsElement = document.getElementById('js-items');
+        
+        // --- ゲーム状態変数 ---
+        let level, round, quizIndex, currentQuizData;
 
-        let quizIndex = 0;
-        let score = 0;
-
-        // クイズの問題と選択肢を表示する関数
-        const setupQuiz = () => {
-            questionElement.textContent = quiz[quizIndex].question;
+        // --- ゲームの初期化・開始 ---
+        const initializeApp = () => {
+            // ローカルストレージから周回数とレベルを取得（なければ初期値1）
+            round = parseInt(localStorage.getItem('quizRound') || '1', 10);
+            level = parseInt(localStorage.getItem('quizLevel') || '1', 10);
             
-            // 選択肢を一度クリア
-            while(itemsElement.firstChild) {
+            // 現在の周回に応じたクイズデータをセット
+            currentQuizData = allQuizzes['round' + round] || allQuizzes.round2;
+            quizIndex = 0;
+
+            setupQuiz();
+        };
+
+        // --- クイズの問題と選択肢を表示 ---
+        const setupQuiz = () => {
+            levelElement.textContent = `LEVEL: ${level}`;
+            questionElement.textContent = currentQuizData[quizIndex].question;
+            
+            while (itemsElement.firstChild) {
                 itemsElement.removeChild(itemsElement.firstChild);
             }
             
-            // 選択肢を生成
-            quiz[quizIndex].answers.forEach((answer) => {
+            currentQuizData[quizIndex].answers.forEach(answer => {
                 const button = document.createElement('button');
                 button.textContent = answer;
                 button.classList.add('btn');
                 itemsElement.appendChild(button);
-
-                // ボタンがクリックされたときの処理
-                button.addEventListener('click', (e) => {
-                    judge(e.target);
-                });
+                button.addEventListener('click', e => judge(e.target));
             });
         };
 
-        // 正誤判定をする関数
+        // --- 正誤判定 ---
         const judge = (selectedButton) => {
-            const selectedAnswer = selectedButton.textContent;
-            if(selectedAnswer === quiz[quizIndex].correct){
-                alert('正解！');
-                score++;
+            if (selectedButton.textContent === currentQuizData[quizIndex].correct) {
+                alert('正解！ レベルが 1 上がった！');
+                level++;
+                localStorage.setItem('quizLevel', level); // レベルを保存
+                levelElement.textContent = `LEVEL: ${level}`;
             } else {
                 alert('不正解！');
             }
@@ -81,25 +102,45 @@
             goToNext();
         };
 
-        // 次の問題へ進むか、結果を表示する関数
+        // --- 次の問題に進む ---
         const goToNext = () => {
-            if(quizIndex < quiz.length) {
+            // 2周目以降で、特定のレベルに達しているかチェック
+            if (round > 1 && level >= finalLevelThreshold) {
+                showFinalChallenge();
+                return;
+            }
+            // 通常のクイズ進行
+            if (quizIndex < currentQuizData.length) {
                 setupQuiz();
             } else {
-                showResult();
+                showRoundResult();
             }
         };
         
-        // 最終結果を表示する関数
-        const showResult = () => {
-            questionElement.textContent = `クイズ終了！あなたの正解数は ${score}/${quiz.length} です!`;
-            itemsElement.innerHTML = `<p class="result-message">おめでとう! プレゼントは「いつも使う机の2段目の引き出し」の中だよ! </p>`;
+        // --- 周回クリア時の結果表示 ---
+        const showRoundResult = () => {
+            questionElement.textContent = `現在のレベルは ${level} です！`;
+            itemsElement.innerHTML = ''; // ボタンをクリア
+            const restartButton = document.createElement('button');
+            restartButton.textContent = 'もう一度挑戦する';
+            restartButton.classList.add('btn', 'restart-btn');
+            itemsElement.appendChild(restartButton);
+
+            restartButton.addEventListener('click', () => {
+                const nextRound = round + 1;
+                localStorage.setItem('quizRound', nextRound); // 次の周回数を保存
+                location.reload(); // ページをリロードして次の周回へ
+            });
         };
 
-        // 最初のクイズを表示
-        setupQuiz();
+        // --- 最終問題の表示 ---
+        const showFinalChallenge = () => {
+            questionElement.textContent = '最終問題...';
+            itemsElement.innerHTML = `<a href="${finalQuizUrl}" class="btn final-link">挑戦する</a>`;
+        };
 
-        
+        // --- アプリケーションの実行 ---
+        initializeApp();
     </script>
 </body>
 </html>

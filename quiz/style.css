@@ -1,3 +1,4 @@
+/* safariだとbtn:hoverが効かないので、使用しない */
 /* 基本的なページ設定 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -20,15 +21,22 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    text-align: center;
+}
+
+/* レベル表示のスタイル */
+#js-level-display {
+    margin: 0 0 15px 0;
+    color: #5bc0de;
+    font-size: 1.8em;
 }
 
 /* 問題文のスタイル */
 .question-text {
-    font-size: 1.5em; /* 文字を少し大きく */
+    font-size: 1.5em;
     font-weight: bold;
     line-height: 1.6;
     margin-bottom: 25px;
-    text-align: center;
 }
 
 /* 選択肢ボタンのレイアウト */
@@ -40,31 +48,44 @@ body {
 
 /* 選択肢ボタンのスタイル */
 .btn {
+    display: block;
     width: 100%;
     padding: 15px;
+    box-sizing: border-box;
     font-weight: bold;
     font-size: 1.2em;
-    background-color: #F0C808; /* ボタンの背景色 */
-    color: #333; /* ボタンの文字色 */
+    background-color: #5bc0de; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    text-decoration: none;
 }
 
-/* ボタンにマウスを乗せたときの効果(スマホだったらいらないかも) */
-.btn:hover {
-    background-color: #2f81f7; /* 背景色 */
+/* 周回クリア後のリスタートボタン */
+.restart-btn {
+    background-color: #5cb85c; /* 緑色 */
 }
 
-/* 最終結果表示メッセージのスタイル */
-.result-message {
-    text-align: center;
-    font-size: 1.3em;
-    font-weight: bold;
-    padding: 20px;
-    color: #d9534f; /* セット 文字色 */
-    border: 2px dashed #d9534f; /*セット 点線の枠線 */
-    border-radius: 8px;
-    margin-top: 20px;
+/* 最終問題のリンクボタン */
+.final-link {
+    background-color: #d9534f; /* 赤色 */
+    animation: pulse 1.5s infinite;
+}
+
+/* ボタンを点滅させるアニメーション */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px 20px rgba(217, 83, 79, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(217, 83, 79, 0);
+    }
 }

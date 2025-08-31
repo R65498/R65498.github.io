@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最終問題</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="style.css?v=1.0">
+</head>
+<body>
+
+    <div class="final-container">
+        <h1>最終問題</h1>
+        <p class="final-question">「僕とあなた」にとって最も大切な、特別な場所はどこ？</p>
+        <input type="text" id="finalAnswer" placeholder="ひらがなで入力してね">
+        <button onclick="checkFinalAnswer()">答え合わせ</button>
+        <p id="finalResult" class="final-result-message"></p>
+    </div>
+
+    <script>
+        const finalAnswerInput = document.getElementById('finalAnswer');
+        const finalResultDisplay = document.getElementById('finalResult');
+
+        // 正解の答え
+        const correctAnswer = "あ"; 
+
+        function checkFinalAnswer() {
+            const userAnswer = finalAnswerInput.value.trim(); // 前後の空白を削除
+
+            if (userAnswer === correctAnswer) {
+                finalResultDisplay.innerHTML = '✨ 大正解！ ✨<br>プレゼントは「ダイニングテーブルの下」に隠してあるよ！<br>おめでとう！';
+                finalResultDisplay.style.color = '#fff'; // 白文字で表示
+                finalResultDisplay.style.backgroundColor = 'rgba(0,0,0,0.5)'; // 背景を少し暗くして読みやすく
+                finalResultDisplay.style.padding = '15px';
+                finalResultDisplay.style.borderRadius = '8px';
+            } else {
+                finalResultDisplay.textContent = 'もう一度考えてみましょう';
+                finalResultDisplay.style.color = '#ffdddd'; // 薄い赤
+            }
+        }
+    </script>
+
+</body>
+</html>
