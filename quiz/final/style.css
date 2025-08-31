@@ -80,7 +80,7 @@ button {
     font-size: 1.4em;
     font-weight: bold;
     background-color: #ffcc00; /* 金色のボタン */
-    color: #a30000; /* ボタンの文字色を背景色と合わせる */
+    color: #a30000;
     border: none;
     border-radius: 8px;
     cursor: pointer;
