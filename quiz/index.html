@@ -19,33 +19,47 @@
     <script>
         // --- 設定項目 ---
         // 2周目以降で、このレベルに到達すると最終問題へ進みます
-        const finalLevelThreshold = 10; 
+        const finalLevelThreshold = 22;
         // 最終問題正解後に表示されるURL
         const finalQuizUrl = './final/index.html';
 
         // --- クイズデータ ---
         const allQuizzes = {
-            // 1周目のクイズ(写真無し)
+            // 1周目のクイズ(写真無し)（簡単め 全体をふわっと）
             round1: [
-                { question: '今からクイズが始まります！練習問題です あなたの好きな色は？', answers: [ '青', '赤', '緑', '黄色'], correct: '青' },
-                { question: '僕たちが初めての旅行で行った場所は？', answers: ['箱根', '沖縄', '京都', '北海道'], correct: '沖縄' },
+                { question: '<目標> レベルを自分の年齢にしましょう<br><練習問題> あなたの好きな色は？', answers: [ '青', '赤', '緑', '黄色'], correct: '青' },
+                { question: '僕たちが初めて二人で行ったところは？', answers: ['USJ', '大阪', '三宮', '四国'], correct: '大阪' },
                 { question: '付き合い始めた記念日はいつ？', answers: ['10月5日', '10月6日', '10月7日', '10月8日'], correct: '10月6日' },
-                { question: '僕の好きな食べ物は次のうちどれ？', answers: ['寿司', '焼肉', 'ラーメン', 'カレーライス'], correct: 'カレーライス' },
-                { question: '初めて一緒に観た映画のジャンルは？', answers: ['アクション', 'コメディ', 'ホラー', '恋愛'], correct: 'アクション' }
+                { question: '僕の好きな食べ物は次のうちどれ？', answers: ['寿司', '焼肉', 'ラーメン', 'カレーライス'], correct: 'ラーメン' },
+                { question: '初めて一緒に観た映画は？', answers: ['コナン', '花束みたいな恋をした', '教皇選挙', '変な家'], correct: 'コナン' }
             ],
-            // 2周目のクイズ(写真アリ)
+            // 2周目のクイズ(写真無し)（一年目　2022-2023/10/05）
             round2: [
-                { question: '僕たちが初めての旅行で行った場所は？', answers: ['箱根', '沖縄', '京都', '北海道'], correct: '沖縄' },
-                { question: '付き合い始めた記念日はいつ？', answers: ['10月5日', '10月6日', '10月7日', '10月8日'], correct: '10月6日' },
-                { question: '僕の好きな食べ物は次のうちどれ？', answers: ['寿司', '焼肉', 'ラーメン', 'カレーライス'], correct: 'カレーライス' },
-                { question: '初めて一緒に観た映画のジャンルは？', answers: ['アクション', 'コメディ', 'ホラー', '恋愛'], correct: 'アクション' }
+                { question: '田宮京佳生誕19歳を祝う写真において<br>ぶれているのはなに？', answers: ['風船1', '風船9', '風船どちらも', '花びら'], correct: '風船9' },
+                { question: '太陽の塔に行ったとき<br>京佳のスマホケースの色は?', answers: ['白', '透明', '青色', '赤色'], correct: '青色' },
+                { question: '2023年の9/24日<br>彼氏にどのブランドの服を着てほしいと連絡している？', answers: ['オニツカタイガー', 'アディダス', '古着', 'NORTH FACE'], correct: 'アディダス' },
+                { question: 'せきぐちの正式名称は？', answers: ['ジュナイパー', 'フクスロー', 'モクロー'], correct: 'モクロー' },
+                { question: '一年記念日のときの横の列⑤の正解は？', answers: ['ランダ', 'クチバシ', 'アート', 'カショク'], correct: 'ランダ' },
+                { question: '一年記念日のときのアルバムの8/4のコメントは？', answers: ['グレートですよこいつは', '鬱イケア', '#スネの破壊者', 'せきぐちっ!!'], correct: 'グレートですよこいつは' }
             ],
-            // 3周目以降は同じクイズが出題されます(救済措置)
+            // 3周目のクイズ(写真有り)（二年目 2023/10/06-2024/10/05）
             round3: [
-                { question: '初めてプレゼントしてくれた物の色は？', answers: ['青', '赤', '白', '黒'], correct: '白' },
-                { question: 'よく行くカフェでいつも頼むものは？', answers: ['コーヒー', '紅茶', 'カフェラテ', 'ジュース'], correct: 'カフェラテ' },
+                { question: '二年目のプレゼントで当てはまらないのは？', answers: ['香水', 'エプロン', 'リリス', 'イーブイ'], correct: 'リリス' },
+                { question: '僕のスマホの待ち受け画像はいつの写真？', answers: ['記念日の写真', '旅行の写真', '白色のみ', 'それ以外の二人の写真'], correct: 'それ以外の二人の写真' },
+                { question: 'ナゾと切符 阪神編のキーワードは？', answers: ['黒いひし形', '青いまる', '150', '180'], correct: '150' },
+                { question: '生野銀山の曲のなかでカバーされている言語はどれ？', answers: ['フランス語', '英語', 'タイ語', '韓国語'], correct: 'フランス語' },
+            ],
+            // 4周目のクイズ(写真有り)（三年目 2024/10/05-2025/10/05）
+            round4: [
+                { question: 'ラジオ会館で飲んだものとは？', answers: ['コーヒー', 'コーラ', '水', '抹茶'], correct: 'コーラ' },
+                { question: '三年目のプレゼントで当てはまらないのは？', answers: ['青', '赤', '白', '黒'], correct: '白' },
                 { question: '僕のスマホの待ち受け画像はいつの写真？', answers: ['記念日の写真', '旅行の写真', '何気ない日常の写真', '初期設定のまま'], correct: '旅行の写真' },
                 { question: 'ボーリングの最高スコアは？', answers: ['100', '120', '150', '180'], correct: '150' }
+            ],
+            // 5周目のクイズ(写真有り)（現在　これを救済措置とする）
+            round5: [
+                { question: '僕のスマホの待ち受け画像はいつの写真？', answers: ['記念日の写真', '旅行の写真', '何気ない日常の写真', '初期設定のまま'], correct: '旅行の写真' },
+                { question: '今日はいてきた靴は?', answers: ['adidas', 'ドクターマーチン', 'VANS', 'TEVA'], correct: 'ドクターマーチン' },
             ],
         };
 
@@ -59,7 +73,7 @@
 
         // --- ゲームの初期化・開始 ---
         const initializeApp = () => {
-            // ローカルストレージから周回数とレベルを取得（なければ初期値1）
+            // ローカルストレージから周回数とレベルを取得（なければ初期値1）(ページリロードしても続きから始まる)
             round = parseInt(localStorage.getItem('quizRound') || '1', 10);
             level = parseInt(localStorage.getItem('quizLevel') || '1', 10);
             
@@ -72,8 +86,8 @@
 
         // --- クイズの問題と選択肢を表示 ---
         const setupQuiz = () => {
-            levelElement.textContent = `LEVEL: ${level}`;
-            questionElement.textContent = currentQuizData[quizIndex].question;
+            levelElement.textContent = `LEVEL: ${level} / 22`;
+            questionElement.innerHTML = currentQuizData[quizIndex].question;
             
             while (itemsElement.firstChild) {
                 itemsElement.removeChild(itemsElement.firstChild);
@@ -94,7 +108,7 @@
                 alert('正解！ レベルが 1 上がった！');
                 level++;
                 localStorage.setItem('quizLevel', level); // レベルを保存
-                levelElement.textContent = `LEVEL: ${level}`;
+                levelElement.textContent = `LEVAL: ${level}`;
             } else {
                 alert('不正解！');
             }
@@ -122,7 +136,7 @@
             questionElement.textContent = `現在のレベルは ${level} です！`;
             itemsElement.innerHTML = ''; // ボタンをクリア
             const restartButton = document.createElement('button');
-            restartButton.textContent = 'もう一度挑戦する';
+            restartButton.textContent = '次のセクションに挑戦する';
             restartButton.classList.add('btn', 'restart-btn');
             itemsElement.appendChild(restartButton);
 
