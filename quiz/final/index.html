@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>最終問題</title>
+    <title>20250914final</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" href="style.css?v=1.1">
 </head>
 <body>
 
     <div class="final-container">
-        <h1>最終問題</h1>
-        <p class="final-question"></p>
-        <input type="text" id="finalAnswer" placeholder="ひらがなで入力してね">
-        <button onclick="FinalAnswer()">答え合わせ</button>
-        <p id="finalResult" class="final-result-message">俺が君の好きなところは？</p>
-    </div>
+    <h1>最終問題</h1>
+    <p class="final-question"></p>
+    <p id="finalResult" class="final-result-message">俺が君の好きなところは？</p>
+    <input type="text" id="finalAnswer" placeholder="入力してね">
+    <button onclick="FinalAnswer()">答え合わせ</button>
+</div>
 
     <script>
-        const finalAnswerInput = document.getElementById('finalAnswer');
         const finalResultDisplay = document.getElementById('finalResult');
 
         // 正解確認
         function FinalAnswer() {
-            finalResultDisplay.innerHTML = 'お誕生日おめでとう!!<br>これからもよろしく！';
-            finalResultDisplay.style.color = '#fff'; // 白文字で表示
-            finalResultDisplay.style.backgroundColor = 'rgba(0,0,0,0.5)'; // 背景を少し暗くして読みやすく
-            finalResultDisplay.style.padding = '15px';
-            finalResultDisplay.style.borderRadius = '8px';
+            finalResultDisplay.innerHTML = '答えは全部！<br>お誕生日おめでとう!!<br>これからもよろしく！';
+            finalResultDisplay.classList.add('show-answer');
         }
     </script>
 
